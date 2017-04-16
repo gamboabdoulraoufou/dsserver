@@ -66,8 +66,8 @@ sudo jupyterhub --generate-config -f /home/datascience/jupyterhub_config.py
 openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -nodes -days 365
 
 # 3-3- create cookie secret
-openssl rand -base64 2048 > /home/datascience/cookie_secret
-sudo chmod a-srwx /home/datascience/cookie_secret
+openssl rand -base64 2048 > /home/cloud/cookie_secret
+sudo chmod a-srwx /home/cloud/cookie_secret
 
 # 3-4- create auth token
 openssl rand -hex 32 > /home/datascience/proxi_auth_token
@@ -88,7 +88,7 @@ c.JupyterHub.port = 443
 c.JupyterHub.ssl_key = '/home/datascience/key.pem'
 c.JupyterHub.ssl_cert = '/home/datascience/cert.pem'
 # Security - cookie secret
-c.JupyterHub.cookie_secret_file ='/home/datascience/cookie_secret'
+c.JupyterHub.cookie_secret_file ='/home/cloud/cookie_secret'
 c.JupyterHub.db_url = '/home/datascience/jupyterhub.sqlite'
 # Security - http token
 c.JupyterHub.proxy_auth_token = '/home/datascience/proxi_auth_token'
@@ -117,7 +117,7 @@ EOF
 
 # 6- test jupyter
 # 6-1 Launch Jupyter server
-@reboot nohup sudo /usr/bin/python3.5 -m jupyterhub -f /home/datascience/jupyterhub_config.py &
+sudo /usr/bin/python3.5 -m jupyterhub -f /home/datascience/jupyterhub_config.py 
 
 # 7- configure crontab to launch jupyter on start
 # Run Jupyter on start up
