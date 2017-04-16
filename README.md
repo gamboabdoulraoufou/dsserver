@@ -44,8 +44,7 @@ chmod 777 get-pip.py
 
 sudo /usr/bin/python3.5 get-pip.py
 
-sudo apt-get install npm 
-sudo apt-get install nodejs-legacy
+sudo apt-get install npm nodejs-legacy
 sudo npm install -g configurable-http-proxy
 
 # 2- install JupyterHub and Jupyter for python 3 kernel
@@ -120,6 +119,10 @@ EOF
 sudo /usr/bin/python3.5 -m jupyterhub -f /home/datascience/jupyterhub_config.py 
 
 # 7- configure crontab to launch jupyter on start
+export VISUAL=nano
+
+crontab -e
+
 # Run Jupyter on start up
 @reboot nohup sudo /usr/local/python-3.4/bin/python3 -m jupyterhub -f /home/agambo/jupyterhub_config.py &
 
