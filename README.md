@@ -124,10 +124,10 @@ export VISUAL=nano
 crontab -e
 
 # Run Jupyter on start up
-@reboot nohup sudo /usr/local/python-3.4/bin/python3 -m jupyterhub -f /home/agambo/jupyterhub_config.py &
+@reboot nohup sudo /usr/local/python-3.4/bin/python3 -m jupyterhub -f /home/datascience/jupyterhub_config.py &
 
-# Stop server after 00:01:00
-1 0 * * * sudo shutdown -h 0
+# Stop server after 23:00:00
+1 21 * * * gcloud compute instances stop dsserver --zone europe-west1-d
 
 ``` 
 
