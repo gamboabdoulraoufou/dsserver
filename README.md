@@ -118,6 +118,67 @@ EOF
 # 6-1 Launch Jupyter server
 sudo /usr/bin/python3.5 -m jupyterhub -f /home/datascience/jupyterhub_config.py 
 
+``` 
+
+> step 3: install Rstudio
+
+```sh  
+# 1- install R
+# 1-1 setting up apt
+sudo sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list'
+gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9
+gpg -a --export E084DAB9 | sudo apt-key add -
+sudo apt-get update
+
+# 2- install R
+sudo apt-get -y install r-base
+
+# 3- download and install R Studio
+sudo apt-get install gdebi-core
+wget https://download2.rstudio.org/rstudio-server-1.0.136-amd64.deb
+sudo gdebi rstudio-server-1.0.136-amd64.deb
+
+# 4- Configuring RStudio 
+# 4-1 create server configuration file
+sudo nano /etc/rstudio/rserver.conf
+
+# 4-2 add the following lines and save file
+# RStudio port
+www-port=8787
+# Allow trafic from a specific IP
+www-address=0.0.0.0 # world wide
+
+# 4-3- Session configuration
+# Create session configuration file
+sudo nano /etc/rstudio/rsession.conf
+# 4-4 add the following code
+# set CRAN 
+r-cran-repos=https://mirrors.nics.utk.edu/cran/
+
+# 4-4- User authentication
+sudo nano /etc/pam.d/rstudio
+
+#4-5- Add the following code
+@include common-auth
+@include common-account
+@include common-password
+@include common-session
+
+# 5- check configuration
+sudo rstudio-server verify-installation
+
+# 6- Managing server
+# Stop
+sudo rstudio-server stop
+# Start
+sudo rstudio-server start
+# Restart
+sudo rstudio-server restart
+``` 
+
+> crontab
+
+```sh  
 # 7- configure crontab to launch jupyter on start
 export VISUAL=nano
 
@@ -126,11 +187,12 @@ crontab -e
 # Run Jupyter on start up
 @reboot nohup sudo /usr/local/python-3.4/bin/python3 -m jupyterhub -f /home/datascience/jupyterhub_config.py &
 
+# Run Rstudio on start up
+@reboot nohup sudo rstudio-server start &
+
 # Stop server after 23:00:00
 1 21 * * * gcloud compute instances stop dsserver --zone europe-west1-d
 
 ``` 
-
-
 
 
