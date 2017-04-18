@@ -8,6 +8,7 @@ In this post I show how to setput a server for data science project. I will inst
 - Theano
 - Tensoflow
 - Xgboost
+- googlemaps
 
 
 > Update  
@@ -250,6 +251,14 @@ export PYTHONPATH=~/xgboost/python-package
 
 ``` 
 
+> step 8: install google maps  
+```sh  
+# Install googlemaps
+sudo pip install -U googlemaps
+
+sudo pip install pyopenssl ndg-httpsclient pyasn1
+``` 
+
 > crontab
 
 ```sh  
@@ -259,7 +268,7 @@ export VISUAL=nano
 crontab -e
 
 # Run Jupyter on start up
-@reboot nohup sudo /usr/local/python-3.4/bin/python3 -m jupyterhub -f /home/datascience/jupyterhub_config.py &
+@reboot nohup sudo /usr/bin/python3.5 -m jupyterhub -f /home/datascience/jupyterhub_config.py &
 
 # Run Rstudio on start up
 @reboot nohup sudo rstudio-server start &
