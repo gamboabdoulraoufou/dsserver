@@ -178,34 +178,48 @@ sudo rstudio-server restart
 
 > step 4: install theano
 ```sh
+# install theano
 sudo /usr/local/anaconda2/bin/python -m pip install Theano
+
+# configure theano to use gpu
+nano ~/.theanorc
+
+# add the folowwing configuration
+[global]
+device = gpu
+floatX = float32
+optimizer_including = cudnn
+allow_gc = False
+[lib]
+cnmem=.95
+
  ``` 
  
 > step 5: install tensorflow
 ```sh  
-sudo apt-get install libcupti-dev
-sudo apt-get install python-dev
-sudo /usr/local/anaconda2/bin/python -m pip install tensorflow
-sudo /usr/local/anaconda2/bin/python -m pip install tensorflow-gpu
+# install pip
+sudo apt-get install python-pip python-dev
 
-sudo /usr/local/anaconda2/bin/python -m pip install --upgrade pip
+# select the correct binary to install (https://www.tensorflow.org/versions/r0.11/get_started/os_setup)
+export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.11.0-cp27-none-linux_x86_64.whl
+
+# upgrage setuptools
+sudo /usr/local/anaconda2/bin/python -m pip install --ignore-installed --upgrade pip setuptools
+
+# install TensorFlow
+sudo /usr/local/anaconda2/bin/python -m pip install --upgrade $TF_BINARY_URL
+
 ``` 
-sudo apt-get remove python-dev
 
-> step 6: install keras
+> step 6: install and configure keras
 ```sh  
+# install kera
 sudo /usr/local/anaconda2/bin/python -m pip install keras
-sudo /usr/local/python-3.4/bin/python3 -m jupyterhub -f /home/abdoulraouf_gambo/jupyterhub_config.py 
 
-sudo pip install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.0.1-cp27-none-linux_x86_64.whl
+# change backend  
+nano ~/.keras/keras.json
 
-sudo pip install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.0.1-cp27-none-linux_x86_64.whl
-
-pip install --upgrade \
-  https://storage.googleapis.com/tensorflow/linux/cpu/protobuf-3.1.0-cp27-none-linux_x86_64.whl
-  
-~/.keras/keras.json
-
+# use the following configuration
 {
     "image_data_format": "channels_last",
     "epsilon": 1e-07,
@@ -214,8 +228,6 @@ pip install --upgrade \
 }
 
 ``` 
-
-sudo pip  install --upgrade TF_PYTHON_URL 
 
 > crontab
 
