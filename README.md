@@ -229,6 +229,27 @@ nano ~/.keras/keras.json
 
 ``` 
 
+> step 7: install xgboost  
+```sh  
+# install git
+sudo apt-get install git
+
+# download package binary
+git clone --recursive https://github.com/dmlc/xgboost
+
+# make
+cd xgboost; make -j4
+
+# install xgboost (https://github.com/dmlc/xgboost/blob/master/doc/build.md#building-on-ubuntu-debian)
+cd
+cd xgboost/python-package
+sudo python setup.py install
+
+# export xgboost path
+export PYTHONPATH=~/xgboost/python-package
+
+``` 
+
 > crontab
 
 ```sh  
