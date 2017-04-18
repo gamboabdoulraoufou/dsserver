@@ -178,17 +178,44 @@ sudo rstudio-server restart
 
 > step 4: install theano
 ```sh
-sudo pip install Theano
+sudo /usr/local/anaconda2/bin/python -m pip install Theano
  ``` 
  
 > step 5: install tensorflow
 ```sh  
 sudo apt-get install libcupti-dev
 sudo apt-get install python-dev
-sudo pip install tensorflow
-sudo pip install tensorflow-gpu
+sudo /usr/local/anaconda2/bin/python -m pip install tensorflow
+sudo /usr/local/anaconda2/bin/python -m pip install tensorflow-gpu
+
+sudo /usr/local/anaconda2/bin/python -m pip install --upgrade pip
+``` 
+sudo apt-get remove python-dev
+
+> step 6: install keras
+```sh  
+sudo /usr/local/anaconda2/bin/python -m pip install keras
+sudo /usr/local/python-3.4/bin/python3 -m jupyterhub -f /home/abdoulraouf_gambo/jupyterhub_config.py 
+
+sudo pip install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.0.1-cp27-none-linux_x86_64.whl
+
+sudo pip install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.0.1-cp27-none-linux_x86_64.whl
+
+pip install --upgrade \
+  https://storage.googleapis.com/tensorflow/linux/cpu/protobuf-3.1.0-cp27-none-linux_x86_64.whl
+  
+~/.keras/keras.json
+
+{
+    "image_data_format": "channels_last",
+    "epsilon": 1e-07,
+    "floatx": "float32",
+    "backend": "theano"
+}
 
 ``` 
+
+sudo pip  install --upgrade TF_PYTHON_URL 
 
 > crontab
 
