@@ -9,6 +9,7 @@ In this post I show how to setput a server for data science project. I will inst
 - Tensoflow
 - Xgboost
 - googlemaps
+- geopy
 
 
 > Update  
@@ -258,6 +259,11 @@ sudo /usr/local/anaconda2/bin/python -m pip install -U googlemaps
 
 sudo /usr/local/anaconda2/bin/python -m pip install pyopenssl ndg-httpsclient pyasn1
 ``` 
+
+> step 9: install geopy  
+```sh
+sudo /usr/local/anaconda2/bin/python -m pip install geopy
+```
 
 > crontab
 
