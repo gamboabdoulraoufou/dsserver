@@ -284,4 +284,4 @@ crontab -e
 
 ``` 
 
-
+export PYTHONPATH=$PYTHONPATH:/usr/local/anaconda2/bin/python
