@@ -254,9 +254,9 @@ export PYTHONPATH=~/xgboost/python-package
 > step 8: install google maps  
 ```sh  
 # Install googlemaps
-sudo pip install -U googlemaps
+sudo /usr/local/anaconda2/bin/python -m pip install -U googlemaps
 
-sudo pip install pyopenssl ndg-httpsclient pyasn1
+sudo /usr/local/anaconda2/bin/python -m pip install pyopenssl ndg-httpsclient pyasn1
 ``` 
 
 > crontab
