@@ -10,6 +10,7 @@ In this post I show how to setput a server for data science project. I will inst
 - Xgboost
 - googlemaps
 - geopy
+- H2O
 
 
 > Update  
@@ -29,6 +30,19 @@ wget https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackc
 
 # Install package
 bash Anaconda2-4.0.0-Linux-x86_64.sh
+
+# update scikit-learn version
+sudo su 
+export PATH=$PATH:/usr/local/anaconda2/bin
+conda --version
+conda install scikit-learn=0.18.1
+exit
+
+# check scikit-learn version
+/usr/local/anaconda2/bin/python
+import sklearn
+print('The scikit-learn version is {}.'.format(sklearn.__version__))
+
 ``` 
 
 > step 2: install and configure jupyter  
