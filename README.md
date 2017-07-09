@@ -61,47 +61,50 @@ sudo pip install "ipython[notebook]"
 
 # 3- configure Jupyter
 # 3-1- create Jupyter configuration file
-sudo jupyterhub --generate-config -f /home/datascience/jupyterhub_config.py
+sudo jupyterhub --generate-config -f /home/agambo/jupyterhub_config.py
 
 # 3-2- create and add SSL certificat, so that your password is not sent unencrypted by your browser
 openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -nodes -days 365
 
 # 3-3- create cookie secret
-openssl rand -base64 2048 > /home/cloud/cookie_secret
-sudo chmod a-srwx /home/cloud/cookie_secret
+openssl rand -base64 2048 > /home/agambo/cookie_secret
+sudo chmod a-srwx /home/agambo/cookie_secret
 
 # 3-4- create auth token
-openssl rand -hex 32 > /home/datascience/proxi_auth_token
+openssl rand -hex 32 > /home/agambo/proxi_auth_token
 
 # 3-5- create auth token
 sudo touch /var/log/jupyterhub.log
 
 # 4- configure Jupyter
 # 4-1- Edit configuration file
-sudo nano /home/datascience/jupyterhub_config.py
+sudo nano /home/agambo/jupyterhub_config.py
 
 # 4-2- Add the content below in configugation file
 c = get_config()
 # IP and Port
-c.JupyterHub.ip = '10.132.0.10' # IP local
-c.JupyterHub.port = 443
+c.JupyterHub.ip = '10.132.0.8' # IP local
+c.JupyterHub.port = 9083
 # Security - SSL
-c.JupyterHub.ssl_key = '/home/datascience/key.pem'
-c.JupyterHub.ssl_cert = '/home/datascience/cert.pem'
+c.JupyterHub.ssl_key = '/home/agambo/key.pem'
+c.JupyterHub.ssl_cert = '/home/agambo/cert.pem'
 # Security - cookie secret
-c.JupyterHub.cookie_secret_file ='/home/cloud/cookie_secret'
-c.JupyterHub.db_url = '/home/datascience/jupyterhub.sqlite'
+c.JupyterHub.cookie_secret_file ='/home/agambo/cookie_secret'
+c.JupyterHub.db_url = '/home/agambo/jupyterhub.sqlite'
 # Security - http token
-c.JupyterHub.proxy_auth_token = '/home/datascience/proxi_auth_token'
+c.JupyterHub.proxy_auth_token = '/home/agambo/proxi_auth_token'
 # put the log file in /var/log
 c.JupyterHub.extra_log_file = '/var/log/jupyterhub.log'
 # specify users and admin
-c.Authenticator.whitelist = {'datascience'}
-c.Authenticator.admin_users = {'datascience'}
+c.Authenticator.whitelist = {'abdoul'}
+c.Authenticator.admin_users = {'abdoul'}
 
 # 4-3- save jupyterhub_config.py
 
 # 5- configure python 2 kernel
+
+# create file
+sudo mkdir -p /usr/local/share/jupyter/kernels/python2.7/
 
 cat <<EOF | sudo tee /usr/local/share/jupyter/kernels/python2.7/kernel.json
 
@@ -118,7 +121,7 @@ EOF
 
 # 6- test jupyter
 # 6-1 Launch Jupyter server
-sudo /usr/bin/python3.5 -m jupyterhub -f /home/datascience/jupyterhub_config.py 
+sudo /usr/bin/python3.5 -m jupyterhub -f /home/agambo/jupyterhub_config.py 
 
 ``` 
 
