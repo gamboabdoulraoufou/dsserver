@@ -169,6 +169,7 @@ sudo nano /etc/pam.d/rstudio
 @include common-password
 @include common-session
 
+
 # 5- check configuration
 sudo rstudio-server verify-installation
 
@@ -213,7 +214,6 @@ sudo /usr/local/anaconda2/bin/python -m pip install --ignore-installed --upgrade
 
 # install TensorFlow
 sudo /usr/local/anaconda2/bin/python -m pip install --upgrade $TF_BINARY_URL
-
 ``` 
 
 > step 6: install and configure keras
@@ -248,7 +248,8 @@ cd xgboost; make -j4
 # install xgboost (https://github.com/dmlc/xgboost/blob/master/doc/build.md#building-on-ubuntu-debian)
 cd
 cd xgboost/python-package
-sudo python setup.py install
+sudo apt-get install python-setuptools
+sudo /usr/local/anaconda2/bin/python setup.py install
 
 # export xgboost path
 export PYTHONPATH=~/xgboost/python-package
@@ -268,6 +269,45 @@ sudo /usr/local/anaconda2/bin/python -m pip install pyopenssl ndg-httpsclient py
 sudo /usr/local/anaconda2/bin/python -m pip install geopy
 ```
 
+> Prepare R for H2O installation  
+```sh
+# Install dependencies
+sudo apt-get install libcurl4-openssl-dev 
+sudo apt-get install libxml2-dev
+
+# Install R packages dependencies
+## log to R
+sudo R
+
+## installa R package
+install.packages("RCurl", lib="/usr/local/lib/R/site-library")
+install.packages("rjson", lib="/usr/local/lib/R/site-library")
+install.packages("statmod", lib="/usr/local/lib/R/site-library")
+install.packages("survival", lib="/usr/local/lib/R/site-library")
+install.packages("stats", lib="/usr/local/lib/R/site-library") -- bad
+install.packages("tools", lib="/usr/local/lib/R/site-library") -- bad
+install.packages("utils", lib="/usr/local/lib/R/site-library") -- bad
+install.packages("methods", lib="/usr/local/lib/R/site-library") -- bad
+``` 
+
+> install and configure H2O for R
+```sh  
+# install java
+sudo apt-get install openjdk-7-jdk
+
+# Downoload package
+wget http://h2o-release.s3.amazonaws.com/h2o/rel-vajda/3/h2o-3.10.5.3.zip
+
+# unpack H2O package
+unzip h2o-3.10.5.3.zip
+cd h2o-3.10.5.3
+
+# Start H2O Server
+nohup sudo java -jar h2o.jar &
+
+# Go to http://IP:54321
+```
+
 > crontab
 
 ```sh  
@@ -277,14 +317,14 @@ export VISUAL=nano
 crontab -e
 
 # Run Jupyter on start up
-@reboot nohup sudo /usr/bin/python3.5 -m jupyterhub -f /home/datascience/jupyterhub_config.py &
+@reboot nohup sudo /usr/bin/python3.5 -m jupyterhub -f /home/agambo/jupyterhub_config.py &
 
 # Run Rstudio on start up
 @reboot nohup sudo rstudio-server start &
 
+# Run H2O on start up
+@reboot nohup sudo java -jar /home/agambo/h2o-3.10.5.3/h2o.jar &
+
 # Stop server after 23:00:00
 1 21 * * * gcloud compute instances stop dsserver --zone europe-west1-d
-
 ``` 
-
-export PYTHONPATH=$PYTHONPATH:/usr/local/anaconda2/bin/python
